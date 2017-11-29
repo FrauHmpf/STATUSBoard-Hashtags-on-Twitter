@@ -1,0 +1,33 @@
+from gpiozero import StatusZero
+import requests
+from time import sleep
+
+def hashtag(text):
+    url = 'http://twitter.com'
+    r = requests.get(url)
+    return text in r.text
+
+sz = StatusZero('picademy', 'tatort', 'edchat')
+
+while True:
+    if hashtag('#picademy'):
+        sz.picademy.green.on()
+        sz.picademy.red.off()
+    else:
+        sz.picademy.red.on()
+        sz.picademy.green.off()
+
+    if hashtag('#tatort'):
+        sz.tatort.green.on()
+        sz.tatort.red.off()
+    else:
+        sz.tatort.red.on()
+        sz.tatort.green.off()
+
+    if hashtag('#edchatDE'):
+        sz.edchat.green.off()
+        sz.edchat.red.on()
+    else:
+        sz.edchat.red.off()
+        sz.edchat.green.on()
+    sleep(60) 
